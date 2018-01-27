@@ -1,14 +1,19 @@
 #include "printChar.h"
 
 int main() {
-	printChar('a',0, 0);
-	printChar('l', 102, 0);
-	printChar('d', 204, 0);
-	printChar('r', 306, 0);
-	printChar('i', 408, 0);
-	printChar('c', 510, 0);
-	printChar('h', 612, 0);
+	int i, j;
+	for(i = 30; i > 0; i--){
+		printChar('a',0, i);
+		printChar('l', 102, i);
+		printChar('d', 204, i);
+		printChar('r', 306, i);
+		printChar('i', 408, i);
+		printChar('c', 510, i);
+		printChar('h', 612, i);
 
-
+		for(j = 0; j < 5000000; j++);
+		clearScreen();
+	}
+	
 	return 0;
 }

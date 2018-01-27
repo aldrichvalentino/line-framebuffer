@@ -11,5 +11,6 @@
 
 void line(int x0, int y0, int x1, int y1, int divx, int divy);
 void printChar(char character, int dx, int dy);
+void clearScreen();
 
 #endif
