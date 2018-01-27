@@ -65,3 +65,52 @@ void line(int x0, int y0, int x1, int y1) {
     if (e2 < dy) { err += dx; y0 += sy; }
   }
 }
+
+void printChar(char character){
+    FILE *test;
+    char i;
+    int lines, j;
+    test = fopen("characters/a.txt", "r");
+    if(test != NULL){
+        i = fgetc(test);
+        lines = atoi(&i); // number of lines
+        i = fgetc(test); // delete enter
+        //printf("%d\n", lines*4);
+        for(i = 0; i < lines; i++){
+            int temp = 0, temp1 = 0, temp2 = 0, temp3 = 0;
+            for(j = 0; j < 3; j++){
+                char c = fgetc(test) - 48;
+                //printf("ini temp %d dan ini char %c\n", temp, c);
+                temp = temp*10 + c;
+            }
+            //printf("%d\n",temp);
+            fgetc(test);
+
+            for(j = 0; j < 3; j++){
+                char c = fgetc(test) - 48;
+                //printf("ini temp %d dan ini char %c\n", temp, c);
+                temp1 = temp1*10 + c;
+            }
+            //printf("%d\n",temp1);
+            fgetc(test);
+
+            for(j = 0; j < 3; j++){
+                char c = fgetc(test) - 48;
+                //printf("ini temp %d dan ini char %c\n", temp, c);
+                temp2 = temp2*10 + c;
+            }
+            //printf("%d\n",temp2);
+            fgetc(test);
+
+            for(j = 0; j < 3; j++){
+                char c = fgetc(test) - 48;
+                //printf("ini temp %d dan ini char %c\n", temp, c);
+                temp3 = temp3*10 + c;
+            }
+            //printf("%d\n",temp3);
+            fgetc(test);
+
+            line(temp, temp1, temp2, temp3);
+        }
+    }
+}
