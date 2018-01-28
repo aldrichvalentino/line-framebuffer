@@ -1,9 +1,14 @@
 #include "printName.h"
 #include "printPlane.c"
 #include "shootPlane.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <termios.h>
+
+struct termios initial_settings, new_settings;
 
 int main() {
-	int length, i, j;
+	int length, i, j, k;
 	char * Name;
 	char * Name2;
     char * Name3;
@@ -12,7 +17,23 @@ int main() {
 	char * Name6;
     char * Name7;
 	char * Name8;
-
+    int bulletCounter = 0;
+    int bullets[10];
+    int n;
+    unsigned char key;
+    
+    // use input from user
+    tcgetattr(0,&initial_settings);
+    
+    new_settings = initial_settings;
+    new_settings.c_lflag &= ~ICANON;
+    new_settings.c_lflag &= ~ECHO;
+    new_settings.c_lflag &= ~ISIG;
+    new_settings.c_cc[VMIN] = 0;
+    new_settings.c_cc[VTIME] = 0;
+    
+    tcsetattr(0, TCSANOW, &new_settings);
+  
     Name = (char*) malloc(4);
     Name[0] = 'a';
     Name[1] = 'm';
@@ -70,6 +91,24 @@ int main() {
     Name8[4] = 'r';
 
     for (i = 200; i > -1300; i--) {
+        n = getchar();
+    
+        if(n != EOF)
+        {
+            key = n;
+        
+            if(key == 27)  /* Escape key pressed */
+            {
+                bullets[bulletCounter] = 0;
+                bulletCounter += 1;
+            } else {
+                break;
+            }
+        
+            /* do something useful here with key */
+            //break;
+        }
+
     	printName(Name, 4, i);
     	printName(Name2, 4, i+160);	
         printName(Name3, 6, i+320);	
@@ -79,17 +118,23 @@ int main() {
         printName(Name7, 5, i+960);	
         printName(Name8, 5, i+1120);	
     	
-        printPlane(500,150);
+        printPlane(i,-100);
 
-        shootPlane(i, i, -1);
-        shootPlane(-1*i, i, 1);
-        shootPlane(0, i, 0);
-
+        for(k = 0; k < bulletCounter; k++){
+            shootPlane(bullets[k], bullets[k], -1);
+            shootPlane(-1*bullets[k], bullets[k], 1);
+            shootPlane(0, bullets[k], 0);
+            bullets[k]--;
+        }
+        
     	for(j = 0; j < 5000000; j++);
 		clearScreen();
         //printf("%d\n",i);
 
     }  	
+
+    tcsetattr(0, TCSANOW, &initial_settings);
+
 	
 	return 0;
 }
