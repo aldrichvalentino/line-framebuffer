@@ -21,9 +21,9 @@ int main() {
 	char * Name6;
     char * Name7;
 	char * Name8;
+      int n;
     int bulletCounter = 0;
     int bullets[10];
-    int n;
     unsigned char key;
     
     // use input from user
@@ -94,48 +94,7 @@ int main() {
     Name8[3] = 'a';
     Name8[4] = 'r';
 
-   int n;
- 
-  unsigned char key;
- 
- 
- 
-  tcgetattr(0,&initial_settings);
- 
-  new_settings = initial_settings;
-  new_settings.c_lflag &= ~ICANON;
-  new_settings.c_lflag &= ~ECHO;
-  new_settings.c_lflag &= ~ISIG;
-  new_settings.c_cc[VMIN] = 0;
-  new_settings.c_cc[VTIME] = 0;
- 
-  tcsetattr(0, TCSANOW, &new_settings);
- 
- int stop = 0;
-
- while (stop != 1) {
-     int y;
- for (y = 200; y > -1300; y--)
-  {
-    n = getchar();
-    if(n != EOF)
-    {
-      key = n;
- 
-      if(key == 27)  /* Escape key pressed */
-      {
-        printPlane();
-        shootPlane(y, y, -1);
-        shootPlane(-1*y, y, 1);
-        shootPlane(0, y, 0);
-    }
-      }
-    /* do something useful here with key */
-  }
-  
- }
- 
-  tcsetattr(0, TCSANOW, &initial_settings);     
+   
 
     for (i = 200; i > -1300; i--) {
         n = getchar();
