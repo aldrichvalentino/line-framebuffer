@@ -1,5 +1,6 @@
 #include "printName.h"
 #include "printPlane.c"
+#include "shootPlane.h"
 
 int main() {
 	int length, i, j;
@@ -80,13 +81,15 @@ int main() {
     	
         printPlane();
 
+        shootPlane(i, i, -1);
+        shootPlane(-1*i, i, 1);
+        shootPlane(0, i, 0);
+
     	for(j = 0; j < 5000000; j++);
 		clearScreen();
         //printf("%d\n",i);
 
-    }
-    
-  	
+    }  	
 	
 	return 0;
 }

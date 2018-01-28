@@ -1,4 +1,4 @@
-#include "printChar.h"
+#include "shootPlane.h"
 
 void line(int x0, int y0, int x1, int y1, int divx, int divy) {
     int fbfd = 0;
@@ -223,7 +223,7 @@ void clearScreen() {
     }
 
     for (y = 0; y < vinfo.yres - 10; y++) {
-        for (x = 0; x < vinfo.xres - 15; x++) {
+        for (x = 0; x < vinfo.xres; x++) {
             location = (x+vinfo.xoffset) * (vinfo.bits_per_pixel/8) +
                        (y+vinfo.yoffset) * finfo.line_length;
 
