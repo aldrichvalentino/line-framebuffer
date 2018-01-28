@@ -1,4 +1,5 @@
 #include "printName.h"
+#include "printPlane.c"
 
 int main() {
 	int length, i, j;
@@ -77,10 +78,12 @@ int main() {
         printName(Name7, 5, i+960);	
         printName(Name8, 5, i+1120);	
     	
+        printPlane();
+
     	for(j = 0; j < 5000000; j++);
 		clearScreen();
         //printf("%d\n",i);
-        
+
     }
     
   	
