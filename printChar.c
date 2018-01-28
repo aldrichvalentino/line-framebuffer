@@ -55,11 +55,12 @@ void line(int x0, int y0, int x1, int y1, int divx, int divy) {
         //setPixel(x0,y0);
         location = (x0+vinfo.xoffset) * (vinfo.bits_per_pixel/8) +
                         (y0+vinfo.yoffset) * finfo.line_length;
-
+        if(y0 > 10 && y0 < vinfo.yres -10){ // escape seg fault
             *(fbp + location) = 255;        // Some blue
             *(fbp + location + 1) = 255;     // A little green
             *(fbp + location + 2) = 255;    // A lot of red
             *(fbp + location + 3) = 0;      // No transparency
+        }
         if (x0==x1 && y0==y1) break;
         e2 = err;
         if (e2 >-dx) { err -= dy; x0 += sx; }
