@@ -115,16 +115,16 @@ int main() {
             //break;
         }
 
-    	printName(Name, 4, i);
-    	printName(Name2, 4, i+160);	
-        printName(Name3, 6, i+320);	
-        printName(Name4, 7, i+480);	
-        printName(Name5, 4, i+640);	
-        printName(Name6, 4, i+800);	
-        printName(Name7, 5, i+960);	
-        printName(Name8, 5, i+1120);	
+    	printName(Name, 4, i, 7, 198, 40);
+    	printName(Name2, 4, i+160, 6, 255, 87);	
+        printName(Name3, 6, i+320, 4, 255, 255);	
+        printName(Name4, 7, i+480, 4, 50, 203);	
+        printName(Name5, 4, i+640, 4, 41, 121);	
+        printName(Name6, 4, i+800, 5, 98, 0);	
+        printName(Name7, 5, i+960, 5, 123, 31);	
+        printName(Name8, 5, i+1120, 4, 183, 110);	
     	
-        printPlane(i,-100);
+        printPlane(i,-100, 255, 255, 255);
 
         for(k = 0; k < bulletCounter; k++){
             shootPlane(bullets[k], bullets[k], -1);

@@ -9,8 +9,8 @@
 #include <sys/mman.h>
 #include <sys/ioctl.h>
 
-void line(int x0, int y0, int x1, int y1, int divx, int divy);
-void printChar(char character, int dx, int dy);
+void line(int x0, int y0, int x1, int y1, int divx, int divy, int r, int g, int b);
+void printChar(char character, int dx, int dy, int r, int g, int b);
 void clearScreen();
 
 #endif

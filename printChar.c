@@ -1,6 +1,6 @@
     #include "shootPlane.h"
 
-void line(int x0, int y0, int x1, int y1, int divx, int divy) {
+void line(int x0, int y0, int x1, int y1, int divx, int divy, int r, int g, int b) {
     int fbfd = 0;
     struct fb_var_screeninfo vinfo;
     struct fb_fix_screeninfo finfo;
@@ -56,9 +56,9 @@ void line(int x0, int y0, int x1, int y1, int divx, int divy) {
         location = (x0+vinfo.xoffset) * (vinfo.bits_per_pixel/8) +
                         (y0+vinfo.yoffset) * finfo.line_length;
         if(y0 > 10 && y0 < vinfo.yres -10){ // escape seg fault
-            *(fbp + location) = 255;        // Some blue
-            *(fbp + location + 1) = 255;     // A little green
-            *(fbp + location + 2) = 255;    // A lot of red
+            *(fbp + location) = r;        // Some blue
+            *(fbp + location + 1) = g;     // A little green
+            *(fbp + location + 2) = b;    // A lot of red
             *(fbp + location + 3) = 0;      // No transparency
         }
         if (x0==x1 && y0==y1) break;
@@ -71,7 +71,7 @@ void line(int x0, int y0, int x1, int y1, int divx, int divy) {
     close(fbfd);
 }
 
-void printChar(char character, int dx, int dy){
+void printChar(char character, int dx, int dy, int r, int g, int b){
     FILE *test;
     char i;
     int lines, j;
@@ -176,7 +176,7 @@ void printChar(char character, int dx, int dy){
                 coordinates[i*4+1],
                 coordinates[i*4+2],
                 coordinates[i*4+3],
-                dx, dy);
+                dx, dy, r, g, b);
         }
     
         free(coordinates);
