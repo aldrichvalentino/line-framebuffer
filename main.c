@@ -1,7 +1,12 @@
 #include "printName.h"
 #include "printPlane.c"
 #include "shootPlane.h"
+#include <termios.h>
 
+
+ 
+struct termios initial_settings,
+               new_settings;
 int main() {
 	int length, i, j;
 	char * Name;
@@ -69,6 +74,49 @@ int main() {
     Name8[3] = 'a';
     Name8[4] = 'r';
 
+   int n;
+ 
+  unsigned char key;
+ 
+ 
+ 
+  tcgetattr(0,&initial_settings);
+ 
+  new_settings = initial_settings;
+  new_settings.c_lflag &= ~ICANON;
+  new_settings.c_lflag &= ~ECHO;
+  new_settings.c_lflag &= ~ISIG;
+  new_settings.c_cc[VMIN] = 0;
+  new_settings.c_cc[VTIME] = 0;
+ 
+  tcsetattr(0, TCSANOW, &new_settings);
+ 
+ int stop = 0;
+
+ while (stop != 1) {
+     int y;
+ for (y = 200; y > -1300; y--)
+  {
+    n = getchar();
+    if(n != EOF)
+    {
+      key = n;
+ 
+      if(key == 27)  /* Escape key pressed */
+      {
+        printPlane();
+        shootPlane(y, y, -1);
+        shootPlane(-1*y, y, 1);
+        shootPlane(0, y, 0);
+    }
+      }
+    /* do something useful here with key */
+  }
+  
+ }
+ 
+  tcsetattr(0, TCSANOW, &initial_settings);     
+
     for (i = 200; i > -1300; i--) {
     	printName(Name, 4, i);
     	printName(Name2, 4, i+160);	
@@ -78,13 +126,6 @@ int main() {
         printName(Name6, 4, i+800);	
         printName(Name7, 5, i+960);	
         printName(Name8, 5, i+1120);	
-    	
-        printPlane();
-
-        
-        shootPlane(i, i, -1);
-        shootPlane(-1*i, i, 1);
-        shootPlane(0, i, 0);
 
     	for(j = 0; j < 5000000; j++);
 		clearScreen();
