@@ -1,4 +1,4 @@
-#include "shootPlane.h"
+    #include "shootPlane.h"
 
 void line(int x0, int y0, int x1, int y1, int divx, int divy) {
     int fbfd = 0;
