@@ -1,11 +1,11 @@
-#include "printChar.h"
+#include "printName.h"
 
 int main() {
 	int length, i, j;
 	char * Name;
 	char * Name2;
 
-	length = 4;
+    length = 4;
     Name = (char*) malloc(length);
     Name[0] = 'a';
     Name[1] = 'm';
@@ -18,12 +18,14 @@ int main() {
     Name2[2] = 'h';
     Name2[3] = 'a';
 
-    for (i = 30; i > 0; i--) {
+    for (i = 200; i > 10; i--) {
     	printName(Name, length, i-0);
     	printName(Name2, length, i-160);	
     	
     	for(j = 0; j < 5000000; j++);
 		clearScreen();
+        //printf("%d\n",i);
+        
     }
     
   	

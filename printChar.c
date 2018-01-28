@@ -56,7 +56,7 @@ void line(int x0, int y0, int x1, int y1, int divx, int divy) {
         location = (x0+vinfo.xoffset) * (vinfo.bits_per_pixel/8) +
                         (y0+vinfo.yoffset) * finfo.line_length;
 
-        *(fbp + location) = 255;        // Some blue
+            *(fbp + location) = 255;        // Some blue
             *(fbp + location + 1) = 255;     // A little green
             *(fbp + location + 2) = 255;    // A lot of red
             *(fbp + location + 3) = 0;      // No transparency
@@ -65,13 +65,16 @@ void line(int x0, int y0, int x1, int y1, int divx, int divy) {
         if (e2 >-dx) { err -= dy; x0 += sx; }
         if (e2 < dy) { err += dx; y0 += sy; }
     }
+
+    munmap(fbp, screensize);
+    close(fbfd);
 }
 
 void printChar(char character, int dx, int dy){
     FILE *test;
     char i;
     int lines, j;
-    //test = fopen("characters/a.txt", "r");
+    int *coordinates;
 
     switch (character) {
         case 'a':
@@ -131,45 +134,53 @@ void printChar(char character, int dx, int dy){
         i = fgetc(test);
         lines = atoi(&i); // number of lines
         i = fgetc(test); // delete enter
-        //printf("%d\n", lines*4);
+        
+        coordinates = (int*) malloc ((4 * lines) * sizeof(int));
+
         for(i = 0; i < lines; i++){
             int temp = 0, temp1 = 0, temp2 = 0, temp3 = 0;
             for(j = 0; j < 3; j++){
                 char c = fgetc(test) - 48;
-                //printf("ini temp %d dan ini char %c\n", temp, c);
                 temp = temp*10 + c;
             }
-            //printf("%d\n",temp);
             fgetc(test);
 
             for(j = 0; j < 3; j++){
                 char c = fgetc(test) - 48;
-                //printf("ini temp %d dan ini char %c\n", temp, c);
                 temp1 = temp1*10 + c;
             }
-            //printf("%d\n",temp1);
             fgetc(test);
 
             for(j = 0; j < 3; j++){
                 char c = fgetc(test) - 48;
-                //printf("ini temp %d dan ini char %c\n", temp, c);
                 temp2 = temp2*10 + c;
             }
-            //printf("%d\n",temp2);
             fgetc(test);
 
             for(j = 0; j < 3; j++){
                 char c = fgetc(test) - 48;
-                //printf("ini temp %d dan ini char %c\n", temp, c);
                 temp3 = temp3*10 + c;
             }
-            //printf("%d\n",temp3);
             fgetc(test);
 
-            line(temp, temp1, temp2, temp3, dx, dy);
+            coordinates[(i*4)] = temp;
+            coordinates[(i*4)+1] = temp1;
+            coordinates[(i*4)+2] = temp2;
+            coordinates[(i*4)+3] = temp3;
         }
+        //printf("keluar\n");
+
+        for(i = 0; i < lines; i++){
+            line(coordinates[i*4], 
+                coordinates[i*4+1],
+                coordinates[i*4+2],
+                coordinates[i*4+3],
+                dx, dy);
+        }
+    
+        free(coordinates);
+        fclose(test);
     }
-    fclose(test);
 }
 
 void clearScreen() {
@@ -210,8 +221,8 @@ void clearScreen() {
         exit(4);
     }
 
-    for (y = 0; y < vinfo.yres - 5; y++) {
-        for (x = 0; x < vinfo.xres - 10; x++) {
+    for (y = 0; y < vinfo.yres - 10; y++) {
+        for (x = 0; x < vinfo.xres - 15; x++) {
             location = (x+vinfo.xoffset) * (vinfo.bits_per_pixel/8) +
                        (y+vinfo.yoffset) * finfo.line_length;
 
