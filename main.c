@@ -79,7 +79,7 @@ int main() {
         printName(Name7, 5, i+960);	
         printName(Name8, 5, i+1120);	
     	
-        printPlane();
+        printPlane(500,150);
 
         shootPlane(i, i, -1);
         shootPlane(-1*i, i, 1);
